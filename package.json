@@ -1,0 +1,14 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "expect-puppeteer": "^4.4.0",
+    "jest": "^26.0.1",
+    "jest-puppeteer": "^4.4.0",
+    "puppeteer": "^2.1.1"
+  }
+}
