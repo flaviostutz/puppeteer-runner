@@ -1,4 +1,4 @@
-const timeout = 5000
+const timeout = process.env.JEST_TEST_TIMEOUT
 
 describe(
   'uol.com.br',
@@ -7,6 +7,8 @@ describe(
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
       await page.goto(process.env.UOL_URL)
+      await page.waitFor(2000)
+      await page.waitForSelector('#usuario')
     }, timeout)
 
     afterAll(async () => {
@@ -16,7 +18,7 @@ describe(
     it('should load without error', async () => {
       let text = await page.evaluate(() => document.body.textContent)
       expect(text).toContain('uol')
-      await page.screenshot({ path: "/app/example/screenshots/uol.jpg" })
+      await page.screenshot({ path: "/app/screenshots/uol.jpg" })
     })
 
   },

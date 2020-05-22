@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y gettext netcat gconf-service \
 WORKDIR /app/
 
 #Optimize building time. Cache npm install on this layer so that it is cached between code updates.
-ADD package.json /app/
+ADD /src/package.json /app/
 RUN npm install
 RUN npm install -g jest
 
@@ -26,10 +26,9 @@ ENV JEST_MAX_CONCURRENCY '5'
 ENV JEST_RUN_IN_BAND 'false'
 ENV JEST_MAX_FAILURES '1'
 
-ADD startup.sh /
+ADD /src/ /app/
+ADD /startup.sh /
+# ADD /example /example
 
-ADD / /app/
-
-EXPOSE 2000
 CMD ["/startup.sh"]
 

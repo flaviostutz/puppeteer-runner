@@ -45,45 +45,15 @@ services:
 
 * JEST_MAX_FAILURES '1' - Number of failed test suites before interrupting tests
 
-* All ENVs set to your container will be used to replace references in files /provisioning/environment.json and /provisioning/collection.json
-
-  * For example, if you use "value": "${GOOGLE_URL}" in environment.json and you have the "GOOGLE_URL=http://google.com" set as a ENV of your container, during startup it will become "value": "http://google.com"
-
 ## Startup scripts
 
 * During startup, if there is a /pre.sh script file, it will be executed. This is optional.
 
-## API
-
-* POST /test
-  * Triggers a new test execution on the server
-  * You can check the test results at "/status"
-  * By using query param "/test?wait=1", the request will wait for the test execution and show results in the response
-
-* GET /status
-  * Returns last execution results as HTTP Status:
-    * 202 if tests are running
-    * 200 if all tests passed
-    * 580 if any tests failed
-    * 500 if there was an internal server error
-
-* GET /results
-  * Returns a HTML page with results from the last execution
-
-* GET /results/json
-  * Returns in json for the last execution
-
-* GET /results/json-summary
-  * Returns in very small json for the last execution. Usefull when /json returns too much data and you need just the totals
-
-* GET /results/junit
-  * Returns the result execution in plain old JUnit XML file
-
 ## CI Tips
 
-* In Gitlab environments, you can build and deploy this container along with all your containers
-* In .gitlab-ci.yml, after you deploy all your services, make a POST "http://mytests/test" in order to trigger a new test execution
-* Then, wait for execution completion by calling GET "/status"
+You can use this container for automatic testing on Dockerhub or someother CI server by creating a docker-compose.test.yml file containing this container with tests and the target container being tested, so that everytime the target container gets built, the puppeteer tests will run and if any tests fails, the build will fail too.
+
+* See an example of this mechanism at https://github.com/flaviostutz/simple-file-server
 
 ## Development Tips
 

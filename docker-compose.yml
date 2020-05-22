@@ -5,6 +5,6 @@ services:
   puppeteer-runner:
     build: .
     image: flaviostutz/puppeteer-runner
-    volumes:
-      - ./example/:/app/example/
-    command: sleep 99999
+    # volumes:
+    #   - ./example/:/app/example/
+    # command: sleep 99999
