@@ -6,7 +6,7 @@ describe(
     let page
     beforeAll(async () => {
       page = await global.__BROWSER__.newPage()
-      await page.goto('https://www.uol.com.br')
+      await page.goto(process.env.UOL_URL)
     }, timeout)
 
     afterAll(async () => {
@@ -16,6 +16,7 @@ describe(
     it('should load without error', async () => {
       let text = await page.evaluate(() => document.body.textContent)
       expect(text).toContain('uol')
+      await page.screenshot({ path: "/app/example/screenshots/uol.jpg" })
     })
 
   },

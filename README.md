@@ -7,17 +7,13 @@ Container with tools for running Puppeteer tests for integration tests on local 
 
 * Create a new directory for the new container
 
-* Create a Postman collection with all the tests and verifications you wish to perform when running this container on the server
-
-  * Create the Postman collection, right click on it and export contents to /provisioning/collection.json
-
-  * Take a look at https://learning.getpostman.com/docs/postman/scripts/test_scripts/ for more details
+* Inside dir "__tests__" place your puppeteer test scripts
   
 * Create Dockerfile
 
 ```
-FROM flaviostutz/postman-runner
-ADD /provisioning /provisioning
+FROM flaviostutz/puppeteer-runner
+ADD /__tests__ /app/__tests__
 ```
 
 * Create docker-compose.yml
@@ -29,30 +25,25 @@ services:
 
   my-tests:
     build: .
-    ports:
-      - 2000:2000
-    environment:
-      - LOG_LEVEL=debug
-      - RUN_ON_STARTUP=true
 ```
 
 * Run "docker-compose up --build"
 
 * Check test results at container logs
 
-* Open http://localhost:2000/results to see complete results
-
-* Run POST "/test" to trigger a new test execution
-
 ## ENVs
-
-* RUN_ON_STARTUP - whetever to run Postman scripts during container startup. defaults to false
-
-* RUN_API_SERVER - whetever to run a REST API server for accepting requests like GET /results, POST /test etc. defaults to true. Set this to false if you wish the container to run, launch test scripts and exit with zero exit code if tests PASSED and not zero if FAILED.
 
 * WAIT_CONNECT_HOST + WAIT_CONNECT_PORT- wait for a successful tcp connection to host:port before starting tests
 
 * WAIT_TIME_SECONDS - time to wait before launching tests (after tcp connect, if defined)
+
+* JEST_TEST_TIMEOUT - Default Jest tests timeout.defaults to '10000'
+
+* JEST_MAX_CONCURRENCY - Max parallel tasks in Jest. defaults to '5'
+
+* JEST_RUN_IN_BAND - Run one test suite at a time, with no concurrency. Useful for debugging. defaults to 'false'
+
+* JEST_MAX_FAILURES '1' - Number of failed test suites before interrupting tests
 
 * All ENVs set to your container will be used to replace references in files /provisioning/environment.json and /provisioning/collection.json
 

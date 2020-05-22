@@ -6,6 +6,7 @@ services:
     build: .
     environment:
       - JEST_TEST_TIMEOUT=10000
+      - UOL_URL=https://uolhost.uol.com.br/
     volumes:
       - ./__tests__:/app/__tests__
     command: sleep 99999
