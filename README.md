@@ -1,4 +1,7 @@
 # puppeteer-runner
+
+[<img src="https://img.shields.io/docker/automated/flaviostutz/puppeteer-runner"/>](https://hub.docker.com/r/flaviostutz/puppeteer-runner)
+
 Container with tools for running Puppeteer tests for integration tests on local or CI environments
 
 ## Usage
